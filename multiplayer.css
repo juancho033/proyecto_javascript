@@ -1,0 +1,475 @@
+  :root {
+      --p1-color: #3498db;
+      --p2-color: #e74c3c;
+      --gold: #f1c40f;
+  }
+
+  body {
+      background: radial-gradient(circle at center, #2c3e50 0%, #000 100%);
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+  }
+
+  .main-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-height: 100vh;
+  }
+
+  .header h1 {
+      margin: 0 0 10px 0;
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+      font-size: 2rem;
+      letter-spacing: 2px;
+  }
+
+  /* --- BOTONES Y NAVEGACIÓN --- */
+  .controls-top {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+
+  .btn-ui {
+      padding: 8px 15px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background: #2c3e50;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+  }
+
+  .btn-ui:hover {
+      background: #34495e;
+      border-color: #777;
+      transform: translateY(-2px);
+  }
+
+  .btn-gold {
+      border-color: var(--gold);
+      color: var(--gold);
+  }
+
+  .btn-red {
+      border-color: #c0392b;
+      color: #e74c3c;
+  }
+
+  .btn-blue {
+      border-color: #3498db;
+      color: #3498db;
+  }
+
+  /* --- ÁREA DE JUEGO --- */
+  .vs-container {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+  }
+
+  .player-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      border-radius: 12px;
+      border: 2px solid #444;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+  }
+
+  .p1-border {
+      border-color: var(--p1-color);
+  }
+
+  .p2-border {
+      border-color: var(--p2-color);
+  }
+
+  .player-header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+  }
+
+  .player-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  }
+
+  .game-area {
+      display: flex;
+      gap: 10px;
+  }
+
+  canvas {
+      background: #0a0a0a;
+      border: 2px solid #333;
+      border-radius: 4px;
+      display: block;
+  }
+
+  .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 80px;
+  }
+
+  .info-box {
+      background: #151515;
+      border: 1px solid #333;
+      padding: 5px;
+      border-radius: 6px;
+      text-align: center;
+  }
+
+  .info-box span {
+      display: block;
+      font-size: 0.6rem;
+      color: #777;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+  }
+
+  .info-box b {
+      font-size: 1rem;
+      color: #fff;
+  }
+
+  /* --- MODALES --- */
+  .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+  }
+
+  #start-overlay,
+  #setup-overlay,
+  #end-overlay {
+      z-index: 100;
+  }
+
+  #rank-overlay,
+  #controls-overlay {
+      z-index: 200;
+  }
+
+  .modal {
+      background: #222;
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid #444;
+      text-align: center;
+      min-width: 320px;
+      box-shadow: 0 0 40px #000;
+      position: relative;
+  }
+
+  .btn-main {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.2s;
+      text-decoration: none;
+      box-sizing: border-box;
+  }
+
+  .btn-main:hover {
+      background: #2ecc71;
+      transform: scale(1.02);
+  }
+
+  .btn-sec {
+      background: #2980b9;
+  }
+
+  .btn-sec:hover {
+      background: #3498db;
+  }
+
+  .btn-warn {
+      background: #e67e22;
+  }
+
+  .btn-warn:hover {
+      background: #d35400;
+  }
+
+  .btn-gold-block {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+  }
+
+  .btn-gold-block:hover {
+      background: var(--gold);
+      color: #000;
+  }
+
+  .btn-danger {
+      background: #c0392b;
+      font-size: 0.8rem;
+      padding: 8px;
+      margin-top: 15px;
+  }
+
+  .btn-danger:hover {
+      background: #e74c3c;
+  }
+
+  input,
+  select {
+      width: 90%;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #111;
+      border: 1px solid #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 1rem;
+  }
+
+  input:focus {
+      border-color: var(--p1-color);
+      outline: none;
+  }
+
+  .error-txt {
+      color: #ff4757;
+      font-size: 0.85rem;
+      display: none;
+      margin-bottom: 10px;
+      background: rgba(255, 71, 87, 0.1);
+      padding: 5px;
+      border-radius: 4px;
+  }
+
+  /* Ranking Tabs */
+  .tabs {
+      display: flex;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #444;
+  }
+
+  .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: none;
+      border: none;
+      color: #777;
+      cursor: pointer;
+      font-weight: bold;
+      border-bottom: 3px solid transparent;
+  }
+
+  .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+  }
+
+  .ranking-list {
+      max-height: 250px;
+      overflow-y: auto;
+      text-align: left;
+      font-size: 0.9rem;
+      margin: 10px 0;
+  }
+
+  .rank-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 5px;
+      border-bottom: 1px solid #333;
+  }
+
+  .rank-gold {
+      color: var(--gold);
+  }
+
+  .rank-meta {
+      font-size: 0.75rem;
+      color: #666;
+      font-style: italic;
+  }
+
+  /* --- ESTILOS GUÍA DE CONTROLES (Keycaps) --- */
+  .controls-grid {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+      text-align: left;
+  }
+
+  .control-col {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #444;
+  }
+
+  .control-row {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+  }
+
+  .key {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #333;
+      border: 1px solid #666;
+      border-bottom: 3px solid #111;
+      border-radius: 4px;
+      color: #fff;
+      font-family: monospace;
+      font-weight: bold;
+      margin-right: 10px;
+      min-width: 20px;
+      text-align: center;
+  }
+
+  .key-space {
+      min-width: 60px;
+  }
+
+  h4 {
+      margin: 0 0 10px 0;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+  }
+
+  .mini-controls {
+    margin-top: auto; /* Empuja los controles al fondo del panel */
+    padding-top: 15px;
+    font-size: 0.7rem;
+    color: #888;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.m-key {
+    display: inline-block;
+    background: #333;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-right: 4px;
+    border-bottom: 2px solid #000;
+    min-width: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Colores temáticos para las teclas */
+.p1-keys .m-key { border-color: var(--p1-color); }
+.p2-keys .m-key { border-color: var(--p2-color); }
+
+/* Ocultar controles de P2 si es CPU */
+.is-cpu #p2-controls-ui {
+    display: none;
+}
+
+.combo-text {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 2rem;
+    pointer-events: none;
+    text-shadow: 2px 2px 0px #000;
+    z-index: 10;
+    animation: comboFloat 0.8s ease-out forwards;
+    white-space: nowrap;
+}
+
+@keyframes comboFloat {
+    0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -20px) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -60px) scale(1); opacity: 0; }
+}
+
+/* Esto hará que el "PERFECT!!" vibre un poco al aparecer */
+.combo-text:contains("PERFECT!!") {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+
+.game-area {
+    position: relative; /* ¡ESTO ES CLAVE! */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.combo-text {
+    position: absolute;
+    /* Centrado respecto al .game-area */
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    
+    font-weight: bold;
+    font-size: 2.2rem;
+    pointer-events: none;
+    z-index: 100;
+    white-space: nowrap;
+    animation: comboFloat 0.8s ease-out forwards;
+}
+
+@keyframes comboFloat {
+    0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -20px) scale(1.1); opacity: 1; }
+    100% { transform: translate(-50%, -80px) scale(1); opacity: 0; }
+}

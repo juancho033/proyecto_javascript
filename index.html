@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lluvia de Bloques - Ultimate Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container" id="main-container">
+        <div style="display:flex; flex-direction:column; gap:15px;">
+            <div class="panel">
+                <h2 id="display-name">JUGADOR</h2>
+                <div id="score" class="stat-value">0</div>
+                <div style="font-size:0.7rem; color:#888;">PUNTOS</div>
+            </div>
+            
+            <div class="panel" style="flex-grow: 1;">
+                <h2>TOP 5 RANKING</h2>
+                <ul id="ranking-list" class="ranking-list"></ul>
+            </div>
+
+            <div class="menu">
+                <button id="btn-multiplayer" class="multi">MODO VERSUS (LOCAL)</button>
+                <button id="btn-pause" class="secondary">PAUSAR (P)</button>
+                <button id="btn-change-name" class="secondary">CAMBIAR NOMBRE</button>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <div id="feedback" class="feedback-text">PERFECT!</div>
+            <canvas id="tetris" width="240" height="400"></canvas>
+            
+            <div id="start-screen" class="overlay flex">
+                <h1 style="color:#2ecc71;">LLUVIA</h1>
+                <h1 style="color:#2ecc71;">DE BLOQUES</h1><br>
+                <p style="color: #aaa; font-size: 0.9rem;">Escribe tu nombre para empezar:</p>
+                <input type="text" id="player-name-input" placeholder="Nombre de usuario" maxlength="20">
+                <div id="error-msg" class="error-msg">¡Debes poner un nombre para jugar!</div>
+                <button id="btn-play">EMPEZAR JUEGO</button>
+            </div>
+
+            <div id="pause-overlay" class="overlay">
+                <h1 style="color:#3498db">PAUSADO</h1>
+                <button id="btn-resume">REANUDAR</button>
+            </div>
+
+            <div id="game-over-overlay" class="overlay">
+                <h1 style="color:#e74c3c">¡PERDISTE!</h1>
+                <p>Tu puntuación: <span id="final-score">0</span></p>
+                <button id="btn-restart">INTENTAR DE NUEVO</button>
+            </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:15px;">
+            <div class="panel">
+                <h2>SIGUIENTE</h2>
+                <canvas id="next-canvas" width="80" height="80"></canvas>
+            </div>
+            
+            <div class="panel">
+                <h2>NIVEL</h2>
+                <div id="level" class="stat-value">1</div>
+            </div>
+
+            <div class="panel">
+                <h2>LINEAS</h2>
+                <div id="lines" class="stat-value">0</div>
+            </div>
+
+            <div class="panel">
+                <h2>CONTROLES</h2>
+                <ul class="controls-list">
+                    <li><span>Mover</span> <div><span class="key">←</span> <span class="key">→</span></div></li>
+                    <li><span>Rotar</span> <div><span class="key">↑</span> o <span class="key">W</span></div></li>
+                    <li><span>Bajar</span> <div><span class="key">↓</span></div></li>
+                    <li><span>Caída</span> <div><span class="key">ESPACIO</span></div></li>
+                </ul>
+            </div>
+
+            <div class="menu">
+                <button id="btn-hard-restart" class="danger">REINICIAR</button>
+            </div>
+            <p style="font-size:0.9rem; color:#888; text-align:center; margin-top:5px;">© Creado por Juan Angel para Chalxsoft</p>
+        </div>
+    </div>
+  
+    <script src="script.js"></script>
+</body>
+</html>

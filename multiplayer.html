@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lluvia de Bloques - Arena Ultimate</title>
+    <link rel="stylesheet" href="multiplayer.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="header">
+            <h1>LLUVIA DE BLOQUES</h1>
+        </div>
+
+        <div class="controls-top">
+            <button class="btn-ui btn-red" onclick="showStartMenu()">⭠ MENÚ</button>
+            <button class="btn-ui btn-blue" onclick="toggleControls()">🎮 CONTROLES</button>
+            <button class="btn-ui btn-gold" onclick="toggleRanking()">🏆 RANKING</button>
+            <button class="btn-ui" id="btn-pause">⏸ PAUSAR</button>
+            <a href="index.html" class="btn-ui">👤 SOLITARIO</a>
+        </div>
+
+        <div class="vs-container">
+            <div class="player-section p1-border">
+                <div class="player-header">
+                    <span class="player-label" style="color:var(--p1-color)" id="p1-name-disp">P1</span>
+                </div>
+                <div class="game-area">
+                    <canvas id="p1-tetris" width="200" height="400"></canvas>
+                    <div class="side-panel">
+                        <div class="info-box"><span>SIGUIENTE</span><canvas id="p1-next" width="60"
+                                height="60"></canvas></div>
+                        <div class="info-box"><span>PUNTOS</span><b id="p1-score">0</b></div>
+                        <div class="info-box"><span>LÍNEAS</span><b id="p1-lines">0</b></div>
+
+                        <div class="mini-controls p1-keys">
+                            <div><span class="m-key">W</span> Rotar</div>
+                            <div><span class="m-key">A</span><span class="m-key">D</span> Mover</div>
+                            <div><span class="m-key">S</span> Bajar</div>
+                            <div><span class="m-key">SPC</span> Drop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="player-section p2-border">
+                <div class="player-header">
+                    <span class="player-label" style="color:var(--p2-color)" id="p2-name-disp">P2</span>
+                </div>
+                <div class="game-area" style="position: relative;">
+                    <canvas id="p2-tetris" width="200" height="400"></canvas>
+                    <div class="side-panel">
+                        <div class="info-box"><span>SIGUIENTE</span><canvas id="p2-next" width="60"
+                                height="60"></canvas></div>
+                        <div class="info-box"><span>PUNTOS</span><b id="p2-score">0</b></div>
+                        <div class="info-box"><span>LÍNEAS</span><b id="p2-lines">0</b></div>
+
+                        <div id="p2-controls-ui" class="mini-controls p2-keys">
+                            <div><span class="m-key">↑</span> Rotar</div>
+                            <div><span class="m-key">←</span><span class="m-key">→</span> Mover</div>
+                            <div><span class="m-key">↓</span> Bajar</div>
+                            <div><span class="m-key">ENT</span> Drop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: MENÚ PRINCIPAL -->
+    <div id="start-overlay" class="overlay" style="display: flex;">
+        <div class="modal">
+            <h2 style="color:var(--gold); margin-top:0;">SELECCIONA MODO</h2>
+            <button class="btn-main btn-sec" onclick="setupGame(false)">JUGADOR VS JUGADOR</button>
+            <button class="btn-main btn-warn" onclick="setupGame(true)">JUGADOR VS CPU</button>
+            <button class="btn-main btn-gold-block" onclick="toggleRanking()">🏆 VER RANKINGS</button>
+            <button class="btn-main" style="background:#555; margin-top:20px;" onclick="toggleControls()">🎮 VER
+                CONTROLES</button>
+            <hr style="border:0; border-top:1px solid #444; margin:15px 0;">
+            <a href="index.html" style="color:#aaa; text-decoration:none; font-size:0.9rem;">Ir a modo Solitario</a>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CONFIGURACIÓN -->
+    <div id="setup-overlay" class="overlay">
+        <div class="modal">
+            <h2 id="setup-title" style="color:var(--p1-color)">CONFIGURACIÓN</h2>
+
+            <input type="text" id="p1-input" placeholder="Nombre Jugador 1 (Obligatorio)" maxlength="10">
+
+            <div id="p2-group">
+                <input type="text" id="p2-input" placeholder="Nombre Jugador 2 (Obligatorio)" maxlength="10">
+            </div>
+
+            <div id="cpu-group" style="display:none;">
+                <label style="font-size:0.8rem; color:#aaa;">INTELIGENCIA ARTIFICIAL</label><br>
+                <select id="cpu-diff">
+                    <option value="easy">FÁCIL (Errática)</option>
+                    <option value="normal" selected>NORMAL (Equilibrada)</option>
+                    <option value="hard">DIFÍCIL (Maestro)</option>
+                </select>
+            </div>
+
+            <div id="error-msg" class="error-txt">⚠️ ¡Los nombres son obligatorios!</div>
+
+            <button class="btn-main" onclick="validateAndStart()">¡A PELEAR!</button>
+            <button style="background:none; border:none; color:#777; cursor:pointer;"
+                onclick="showStartMenu()">Volver</button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: RANKING -->
+    <div id="rank-overlay" class="overlay">
+        <div class="modal">
+            <h3 style="color:var(--gold); margin-top:0;">SALÓN DE LA FAMA</h3>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('cpu')">VS IA</button>
+                <button class="tab-btn" onclick="switchTab('pvp')">1 VS 1</button>
+            </div>
+
+            <div class="ranking-list" id="rank-list">
+                <!-- Se llena con JS -->
+            </div>
+
+            <button class="btn-main btn-danger" onclick="clearRankings()">🗑️ BORRAR DATOS</button>
+            <button class="btn-main btn-sec" onclick="toggleRanking()">CERRAR</button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: CONTROLES (NUEVO) -->
+    <div id="controls-overlay" class="overlay">
+        <div class="modal" style="min-width: 500px;">
+            <h2 style="color:#fff; margin-top:0;">GUÍA DE CONTROLES</h2>
+
+            <div class="controls-grid">
+                <!-- P1 -->
+                <div class="control-col" style="border-color: var(--p1-color);">
+                    <h4 style="color:var(--p1-color)">JUGADOR 1</h4>
+                    <div class="control-row"><span class="key">A</span> <span class="key">D</span> Mover</div>
+                    <div class="control-row"><span class="key">W</span> Rotar</div>
+                    <div class="control-row"><span class="key">S</span> Bajar</div>
+                    <div class="control-row"><span class="key key-space">ESPACIO</span> Caída Rápida</div>
+                </div>
+
+                <!-- P2 -->
+                <div class="control-col" style="border-color: var(--p2-color);">
+                    <h4 style="color:var(--p2-color)">JUGADOR 2</h4>
+                    <div class="control-row"><span class="key">←</span> <span class="key">→</span> Mover</div>
+                    <div class="control-row"><span class="key">↑</span> Rotar</div>
+                    <div class="control-row"><span class="key">↓</span> Bajar</div>
+                    <div class="control-row"><span class="key key-space">ENTER</span> Caída Rápida</div>
+                </div>
+            </div>
+
+            <div style="text-align:center; color:#aaa; font-size:0.9rem; margin-bottom:15px;">
+                <span class="key">P</span> o <span class="key">ESC</span> para PAUSAR
+            </div>
+
+            <button class="btn-main btn-sec" onclick="toggleControls()">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- MODAL 5: GAME OVER -->
+    <div id="end-overlay" class="overlay">
+        <div class="modal">
+            <h1 id="winner-text">GANADOR</h1>
+            <p id="winner-score" style="color:#ccc; font-size:1.2rem; margin-bottom:20px;"></p>
+
+            <button class="btn-main" onclick="restartMatch()">REINTENTAR PARTIDA</button>
+            <button class="btn-main btn-gold-block" onclick="toggleRanking()">🏆 VER RANKING</button>
+            <button class="btn-main btn-sec" onclick="showStartMenu()">CAMBIAR MODO</button>
+            <a href="index.html" class="btn-main" style="background:#444;">SALIR AL SOLITARIO</a>
+        </div>
+    </div>
+
+    <script src="multiplayer.js"></script>
+</body>
+
+</html>
